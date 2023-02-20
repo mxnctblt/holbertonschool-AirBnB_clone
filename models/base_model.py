@@ -30,7 +30,7 @@ class BaseModel:
                 if arg in ('created_at', 'update_at'):
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 if arg != '__class__':
-                    settattr(self, arg, value)
+                    setattr(self, arg, value)
         else: 
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
