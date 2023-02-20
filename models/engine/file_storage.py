@@ -4,6 +4,7 @@ This module contain the file storage
 """
 import json
 from models.base_model import BaseModel
+from os import path
 
 
 class FileStorage:
