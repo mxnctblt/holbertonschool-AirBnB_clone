@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from uuid import uuid4
+import models
 
 
 class BaseModel:
@@ -31,10 +32,11 @@ class BaseModel:
                     value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
                 if arg != '__class__':
                     setattr(self, arg, value)
-        else: 
+        else:
             self.id = str(uuid4())
             self.created_at = datetime.utcnow()
             self.updated_at = datetime.utcnow()
+            models.storage.new(self)
 
     def __str__(self):
         """ prints: [<class name>] (<self.id>) <self.__dict__> """
@@ -45,6 +47,7 @@ class BaseModel:
         """ updates the public instance attribute updated_at
         with the current datetime """
         self.updated_at = datetime.utcnow()
+        models.storage.save()
 
     def to_dict(self):
         """ returns a dictionary containing all keys/values
