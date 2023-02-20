@@ -33,10 +33,10 @@ class FileStorage:
         serializes __objects to the JSON file (path: __file_path)
         """
         json_dict = {}
-        for i, j in self.__objects.items():
-            json_dict[i] = j.to_dict()
-            with open(self.__file_path, mode='w', encoding='utf-8') as f:
-                f.write(json.dumps(json_dict))
+        for k, v in self.__objects.items():
+            json_dict[k] = v.to_dict()
+        with open(self.__file_path, mode='w', encoding='utf-8') as f:
+            f.write(json.dumps(json_dict))
 
     def reload(self):
         """deserializes the JSON file to __objects (only if the 
@@ -46,5 +46,5 @@ class FileStorage:
         if path.exists(self.__file_path):
             with open(self.__file_path, mode='r', encoding='utf-8') as f:
                 json_dict = json.loads(f.read())
-                for i, j in json_dict.items():
-                    self.__objects[i] = eval(j['__class__'])(**j)
+                for k, v in json_dict.items():
+                    self.__objects[k] = eval(v['__class__'])(**v)
