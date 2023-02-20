@@ -23,11 +23,18 @@ class BaseModel:
         of __dict__ of the instance
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """ initialization of BaseModel """
-        self.id = str(uuid4())
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        if kwargs:
+            for arg, value in kwargs.items():
+                if arg in ('created_at', 'update_at'):
+                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
+                if arg != '__class__':
+                    settattr(self, arg, value)
+        else: 
+            self.id = str(uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def __str__(self):
         """ prints: [<class name>] (<self.id>) <self.__dict__> """
