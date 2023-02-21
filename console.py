@@ -134,25 +134,38 @@ class HBNBCommand(cmd.Cmd):
         l = line.split()
         d = storage.all()
         k = "{}.{}".format(l[0], l[1])
-        if not line:
+        if len(l) == 0:
             print("** class name missing **")
-        elif l[0] not in HBNBCommand.__classes:
+        if l[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        elif len(l) < 2:
+        if len(l) == 1:
             print("** instance id missing **")
-        if k not in d:
+        if k not in d.keys():
             print("** no instance found **")
-        elif len(l) < 3:
+        if len(l) == 2:
             print("** attribute name missing **")
-        elif len(l) < 4:
-            print("** value missing **")
-        o = d[k]
-        try:
-            o.__dict__[l[2]] = eval(l[3])
-            o.save()
-        except Exception:
-            o.__dict__[l[2]] = l[3]
-            o.save()
+        if len(l) == 3:
+            try:
+                type(eval(l[2])) != dict
+            except ValueError:
+                print("** value missing **")
+        if len(l) == 4:
+            o = d[k]
+            if l[2] in o.__class__.__dict__.keys():
+                v = type(o.__class__.__dict__[l[2]])
+                o.__dict__[l[2]] = v(l[3])
+            else:
+                o.__dict__[l[2]] = l[3]
+        elif type(eval(l[2])) == dict:
+            o = d[k]
+            for key, value in eval(l[2]).items():
+                if (key in o..__class__.__dict__.keys() and
+                        type(o.__class__.__dict__[key]) in {str, int, float}):
+                    v = type(o.__class__.__dict__[key])
+                    o.__dict__[key] = v(value)
+                else:
+                    o.__dict__[key] = value
+        storage.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
