@@ -132,40 +132,24 @@ class HBNBCommand(cmd.Cmd):
         updating attribute (save the change into the JSON file).
         """
         l = line.split()
+        n = ["id", "created_at", "updated_at"]
         d = storage.all()
-        k = "{}.{}".format(l[0], l[1])
-        if len(l) == 0:
+        if not line:
             print("** class name missing **")
-        if l[0] not in HBNBCommand.__classes:
+        elif l[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        if len(l) == 1:
+        elif len(l) == 1:
             print("** instance id missing **")
-        if k not in d.keys():
+        elif "{}.{}".format(l[0], l[1]) not in d:
             print("** no instance found **")
-        if len(l) == 2:
+        elif len(l) < 3:
             print("** attribute name missing **")
-        if len(l) == 3:
-            try:
-                type(eval(l[2])) != dict
-            except ValueError:
-                print("** value missing **")
-        if len(l) == 4:
-            o = d[k]
-            if l[2] in o.__class__.__dict__.keys():
-                v = type(o.__class__.__dict__[l[2]])
-                o.__dict__[l[2]] = v(l[3])
-            else:
-                o.__dict__[l[2]] = l[3]
-        elif type(eval(l[2])) == dict:
-            o = d[k]
-            for key, value in eval(l[2]).items():
-                if (key in o.__class__.__dict__.keys() and
-                        type(o.__class__.__dict__[key]) in {str, int, float}):
-                    v = type(o.__class__.__dict__[key])
-                    o.__dict__[key] = v(value)
-                else:
-                    o.__dict__[key] = value
-        storage.save()
+        elif len(l) < 4:
+            print("** value missing **")
+        elif l[2] not in n:
+            obj = d[class_id]
+            obj.__dict__[l[2]] = l[3]
+            obj.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
