@@ -133,13 +133,13 @@ class HBNBCommand(cmd.Cmd):
         """
         l = line.split()
         d = storage.all()
-        k = "{}.{}".format(l[0], l[1])
         if len(l) == 0:
             print("** class name missing **")
         if l[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
         if len(l) == 1:
             print("** instance id missing **")
+        k = "{}.{}".format(l[0], l[1])
         if k not in d.keys():
             print("** no instance found **")
         if len(l) == 2:
