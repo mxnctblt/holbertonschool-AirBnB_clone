@@ -132,26 +132,27 @@ class HBNBCommand(cmd.Cmd):
         updating attribute (save the change into the JSON file).
         """
         l = line.split()
-        n = ["id", "created_at", "updated_at"]
         d = storage.all()
+        k = "{}.{}".format(l[0], l[1])
         if not line:
             print("** class name missing **")
         elif l[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        elif len(l) == 1:
+        elif len(l) < 2:
             print("** instance id missing **")
-        else:
-            class_id = "{}.{}".format(l[0], l[1])
-        if class_id not in storage.all():
+        if k not in d:
             print("** no instance found **")
         elif len(l) < 3:
             print("** attribute name missing **")
         elif len(l) < 4:
             print("** value missing **")
-        elif l[2] not in n:
-            obj = d[class_id]
-            obj.__dict__[l[2]] = l[3]
-            obj.save()
+        o = d[k]
+        try:
+            o.__dict__[l[2]] = eval(l[3])
+            o.save()
+        except Exception:
+            o.__dict__[l[2]] = l[3]
+            o.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
