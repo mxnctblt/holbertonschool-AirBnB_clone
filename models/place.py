@@ -4,7 +4,7 @@
 from models.base_model import BaseModel
 
 
-class Place(Basemodel):
+class Place(BaseModel):
     """Our place class"""
     city_id = ""
     user_id = ""
