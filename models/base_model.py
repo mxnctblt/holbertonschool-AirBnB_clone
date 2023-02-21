@@ -26,18 +26,18 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """ initialization of BaseModel """
-        if kwargs:
-            for arg, value in kwargs.items():
-                if arg in ('created_at', 'update_at'):
-                    value = datetime.strptime(value, '%Y-%m-%dT%H:%M:%S.%f')
-                if arg != '__class__':
-                    setattr(self, arg, value)
+        time = "%Y-%m-%dT%H:%M:%S.%f"
+        self.id = str(uuid.uuid4())
+        self.created_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
+        if len(kwargs) != 0:
+            for k, v in kwargs.items():
+                if k == "created_at" or k == "updated_at":
+                    self.__dict__[k] = datetime.strptime(v, time)
+                else:
+                    self.__dict__[k] = v
         else:
-            self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
-            self.updated_at = self.created_at
             models.storage.new(self)
-
     def __str__(self):
         """ prints: [<class name>] (<self.id>) <self.__dict__> """
         return ('[{}] ({}) {}'.format(self.__class__.__name__,
