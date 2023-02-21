@@ -159,7 +159,7 @@ class HBNBCommand(cmd.Cmd):
         elif type(eval(l[2])) == dict:
             o = d[k]
             for key, value in eval(l[2]).items():
-                if (key in o..__class__.__dict__.keys() and
+                if (key in o.__class__.__dict__.keys() and
                         type(o.__class__.__dict__[key]) in {str, int, float}):
                     v = type(o.__class__.__dict__[key])
                     o.__dict__[key] = v(value)
