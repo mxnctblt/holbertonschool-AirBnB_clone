@@ -28,5 +28,9 @@ class Testreview(unittest.TestCase):
         rev1 = Review()
         self.assertTrue(issubclass(rev1.__class__, BaseModel))
 
+    def test_none(self):
+        bm1 = BaseModel(None)
+        self.assertNotIn(None, bm1.__dict__)
+
 if __name__ == "__main__":
     unittest.main()
