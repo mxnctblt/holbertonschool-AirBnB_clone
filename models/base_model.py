@@ -38,6 +38,7 @@ class BaseModel:
                     self.__dict__[k] = v
         else:
             models.storage.new(self)
+
     def __str__(self):
         """ prints: [<class name>] (<self.id>) <self.__dict__> """
         return ('[{}] ({}) {}'.format(self.__class__.__name__,

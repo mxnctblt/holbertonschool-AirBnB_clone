@@ -72,36 +72,36 @@ class HBNBCommand(cmd.Cmd):
         Prints the string representation of an instance based on the class name
         and id.
         """
-        l = line.split()
+        li = line.split()
         d = storage.all()
-        if len(l) == 0:
+        if len(li) == 0:
             print("** class name missing **")
-        elif l[0] not in HBNBCommand.__classes:
+        elif li[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        elif len(l) == 1:
+        elif len(li) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(l[0], l[1]) not in d:
+        elif "{}.{}".format(li[0], li[1]) not in d:
             print("** no instance found **")
         else:
-            print(d["{}.{}".format(l[0], l[1])])
+            print(d["{}.{}".format(li[0], li[1])])
 
     def do_destroy(self, line):
         """
         Deletes an instance based on the class name and id
         (save the change into the JSON file)
         """
-        l = line.split()
+        li = line.split()
         d = storage.all()
-        if len(l) == 0:
+        if len(li) == 0:
             print("** class name missing **")
-        elif l[0] not in HBNBCommand.__classes:
+        elif li[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        elif len(l) == 1:
+        elif len(li) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(l[0], l[1]) not in d:
+        elif "{}.{}".format(li[0], li[1]) not in d:
             print("** no instance found **")
         else:
-            del (d["{}.{}".format(l[0], l[1])])
+            del (d["{}.{}".format(li[0], li[1])])
             storage.save()
 
     def do_all(self, line):
@@ -115,11 +115,11 @@ class HBNBCommand(cmd.Cmd):
             n = 1
             print('{}'.format(o))
         elif line:
-            l = line.split()
-        if line and l[0] in HBNBCommand.__classes:
+            li = line.split()
+        if line and li[0] in HBNBCommand.__classes:
             n = 1
             o = storage.all()
-            name = l[0]
+            name = li[0]
             o = ([str(v) for k, v in o.items()
                   if name == v.__class__.__name__])
         print(o)
@@ -131,25 +131,26 @@ class HBNBCommand(cmd.Cmd):
         Updates an instance based on the class name and id by adding or
         updating attribute (save the change into the JSON file).
         """
-        l = line.split()
+        li = line.split()
         n = ["id", "created_at", "updated_at"]
         d = storage.all()
         if not line:
             print("** class name missing **")
-        elif l[0] not in HBNBCommand.__classes:
+        elif li[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
-        elif len(l) == 1:
+        elif len(li) == 1:
             print("** instance id missing **")
-        elif "{}.{}".format(l[0], l[1]) not in d:
+        elif "{}.{}".format(li[0], li[1]) not in d:
             print("** no instance found **")
-        elif len(l) < 3:
+        elif len(li) < 3:
             print("** attribute name missing **")
-        elif len(l) < 4:
+        elif len(li) < 4:
             print("** value missing **")
-        elif l[2] not in n:
-            obj = d["{}.{}".format(l[0], l[1])]
-            obj.__dict__[l[2]] = l[3]
+        elif li[2] not in n:
+            obj = d["{}.{}".format(li[0], li[1])]
+            obj.__dict__[li[2]] = li[3]
             obj.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
