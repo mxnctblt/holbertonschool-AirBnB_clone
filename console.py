@@ -147,7 +147,7 @@ class HBNBCommand(cmd.Cmd):
         elif len(l) < 4:
             print("** value missing **")
         elif l[2] not in n:
-            obj = d[class_id]
+            obj = d["{}.{}".format(l[0], l[1])]
             obj.__dict__[l[2]] = l[3]
             obj.save()
 
