@@ -45,7 +45,7 @@ class TestReview(unittest.TestCase):
         self.assertEqual(type(self.Test1.user_id), str)
 
     def test_save(self):
-        self.Mitali.save()
+        self.Test1.save()
         self.assertNotEqual(self.Test1.created_at, self.Test1.updated_at)
 
     def test_to_dict(self):
