@@ -1,59 +1,50 @@
 #!/usr/bin/python3
-"""Unit test for the file storage class
+"""
+module testing amenity
 """
 import unittest
-from models import amenity
+import os
 from models.amenity import Amenity
 from models.base_model import BaseModel
-from models import storage
-import os
 
 
-class TestAmenityClass(unittest.TestCase):
-    """TestAmenityClass test for the inheretit class
-    Amenity, this tests that the output is as expected
-    Args:
-        unittest (): Propertys for unit testing
-    """
+class TestAmenity(unittest.TestCase):
 
-    def tearDown(self):
-        """ destroys created file """
-        storage._FileStorage__file_path = "file.json"
+    @classmethod
+    def setUpClass(cls):
+        cls.amen = Amenity()
+        cls.amen.name = "jacuzzi"
+
+    @classmethod
+    def tearDownClass(cls):
+        del cls.amen
         try:
-            os.remove("test.json")
+            os.remove("file.json")
         except FileNotFoundError:
             pass
 
-    def setUp(self):
-        """Return to "" class attributes"""
-        with open("test.json", 'w'):
-            storage._FileStorage__file_path = "test.json"
-            storage._FileStorage__objects = {}
-        Amenity.name = ""
+    def test_subclass(self):
+        self.assertTrue(issubclass(self.amen.__class__, BaseModel), True)
 
-    def test_module_doc(self):
-        """ check for module documentation """
-        self.assertTrue(len(amenity.__doc__) > 0)
+    def test_functions(self):
+        self.assertIsNotNone(Amenity.__doc__)
 
-    def test_class_doc(self):
-        """ check for documentation """
-        self.assertTrue(len(Amenity.__doc__) > 0)
+    def test_attr(self):
+        self.assertTrue('id' in self.amen.__dict__)
+        self.assertTrue('created_at' in self.amen.__dict__)
+        self.assertTrue('updated_at' in self.amen.__dict__)
+        self.assertTrue('name' in self.amen.__dict__)
 
-    def test_method_docs(self):
-        """ check for method documentation """
-        for func in dir(Amenity):
-            self.assertTrue(len(func.__doc__) > 0)
+    def test_strings(self):
+        self.assertEqual(type(self.amen.name), str)
 
-    def test_is_instance(self):
-        """ Test if user is instance of basemodel """
-        my_Amenity = Amenity()
-        self.assertTrue(isinstance(my_Amenity, BaseModel))
+    def test_save(self):
+        self.amen.save()
+        self.assertNotEqual(self.amen.created_at, self.amen.updated_at)
 
-    def test_field_types(self):
-        """ Test field attributes of user """
-        my_Amenity = Amenity()
-        self.assertTrue(type(my_Amenity.name) == str)
+    def test_to_dict(self):
+        self.assertEqual('to_dict' in dir(self.amen), True)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
