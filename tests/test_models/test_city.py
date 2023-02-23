@@ -1,49 +1,86 @@
 #!/usr/bin/python3
-"""Unit test for the class city
-"""
+""" unittests for User """
+import os
+import models
 import unittest
-from models import city
+from datetime import datetime
 from models.city import City
 from models.base_model import BaseModel
+from time import sleep
 
 
-class TestCityClass(unittest.TestCase):
-    """TestCityClass test for the city class
-    Args:
-        unittest (): Propertys for unit testing
-    """
+class TestCity(unittest.TestCase):
+    """ testing city """
 
-    maxDiff = None
+    @classmethod
+    def setUpClass(cls):
+        """set up for test"""
+        cls.city = City()
+        cls.city.name = "Antoine"
+        cls.city.state_id = "123"
 
-    def setUp(self):
-        """Return to "" class attributes"""
-        City.name = ""
-        City.state_id = ""
+    @classmethod
+    def teardown(cls):
+        """ at the end of the test cls will tear it down """
+        del cls.city
 
-    def test_module_doc(self):
-        """ check for module documentation """
-        self.assertTrue(len(city.__doc__) > 0)
+    def tearDown(self):
+        """ teardown file.json """
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
 
-    def test_class_doc(self):
-        """ check for documentation """
-        self.assertTrue(len(City.__doc__) > 0)
-
-    def test_method_docs(self):
-        """ check for method documentation """
-        for func in dir(City):
-            self.assertTrue(len(func.__doc__) > 0)
-
-    def test_is_instance(self):
-        """ Test if user is instance of basemodel """
-        my_city = City()
-        self.assertTrue(isinstance(my_city, BaseModel))
-
-    def test_field_types(self):
-        """ Test field attributes of user """
-        my_city = City()
-        self.assertTrue(type(my_city.name) == str)
-        self.assertTrue(type(my_city.state_id) == str)
+    def test_types(self):
+        """ testing the types """
+        self.assertEqual(City, type(City()))
+        self.assertEqual(datetime, type(City().created_at))
+        self.assertEqual(datetime, type(City().updated_at))
+        self.assertEqual(str, type(City().id))
+        self.assertEqual(str, type(City.name))
+        self.assertEqual(str, type(City.state_id))
 
 
-if __name__ == '__main__':
+    def test_city(self):
+        """ testing its attributes """
+        self.assertTrue('name' in self.city.__dict__)
+        self.assertTrue('state_id' in self.city.__dict__)
+        self.assertTrue('id' in self.city.__dict__)
+        self.assertTrue('created_at' in self.city.__dict__)
+        self.assertTrue('updated_at' in self.city.__dict__)
+        self.assertIn(City(), models.storage.all().values())
+        self.assertEqual(self.city.name, 'Antoine')
+        self.assertEqual(self.city.state_id, '123')
+        self.assertIsNotNone(City.__doc__)
+        self.assertTrue(issubclass(self.city.__class__, BaseModel), True)
+        self.city.save()
+        self.assertNotEqual(self.city.created_at, self.city.updated_at)
+        self.assertEqual('to_dict' in dir(self.city), True)
+
+    def test_str(self):
+        """ testing string representation """
+        dt = datetime.today()
+        dt_repr = repr(dt)
+        ct = City()
+        ct.id = "123456"
+        ct.created_at = ct.updated_at = dt
+        ctstr = ct.__str__()
+        self.assertIn("[City] (123456)", ctstr)
+        self.assertIn("'id': '123456'", ctstr)
+        self.assertIn("'created_at': " + dt_repr, ctstr)
+        self.assertIn("'updated_at': " + dt_repr, ctstr)
+
+    def test_kwargs(self):
+        """ testing instantation with kwargs """
+        dt = datetime.today()
+        dt_iso = dt.isoformat()
+        ct = City(id="123456", created_at=dt_iso, updated_at=dt_iso)
+        self.assertEqual(ct.id, "123456")
+        self.assertEqual(ct.created_at, dt)
+        self.assertEqual(ct.updated_at, dt)
+        with self.assertRaises(TypeError):
+            City(id=None, created_at=None, updated_at=None)
+
+
+if __name__ == "__main__":
     unittest.main()
