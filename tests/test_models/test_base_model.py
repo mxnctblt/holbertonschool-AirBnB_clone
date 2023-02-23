@@ -2,6 +2,7 @@
 """ unittests for BaseModel """
 
 import os
+import models
 import unittest
 from datetime import datetime
 from models.base_model import BaseModel
@@ -48,6 +49,24 @@ class TestBaseModel(unittest.TestCase):
         bm6 = BaseModel("1234", id="5678", created_at=dtiso, updated_at=dtiso)
         self.assertEqual(bm6.id, "5678")
 
+    @classmethod
+    def setUp(self):
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+
+    @classmethod
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+
     def test_save(self):
         """ testing the public instance method save() """
         # testing with arg
@@ -64,6 +83,12 @@ class TestBaseModel(unittest.TestCase):
         up2 = bm2.updated_at
         bm2.save()
         self.assertLess(up2, bm2.updated_at)
+        self.assertIn(BaseModel(), models.storage.all().values())
+        # testing save updated_at
+        bm3 = BaseModel()
+        bm3.save()
+        with open("file.json", "r") as f:
+            self.assertIn("BaseModel." + bm3.id, f.read())
 
     def test_to_dict(self):
         """ testing the public instance method to_dict() """
