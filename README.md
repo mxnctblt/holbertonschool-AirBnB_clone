@@ -5,7 +5,7 @@
 This project has for goal to create a simple copy of the [AirBnB website](https://www.airbnb.com/).
 It will not have all the features, only some of them to cover all fundamental concepts of the higher level programming track.
 
-This project will take four months and six steps. We are currently working on: __the Console__
+This project will take four months and six steps. We are currently working on: __Web Static__
 
 
 ## 1st step - The Console
