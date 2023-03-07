@@ -4,11 +4,7 @@ header {
 	height: 70px;
 	width: 100%;
 	border-bottom: 1px solid #CCCCCC;
-}
-
-.header-logo {
-	position: absolute;
-	display: flex;
-	align-content: center;
-	left: 20px;
+	background-image: url("../images/logo.png");
+	background-repeat: no-repeat;
+	background-position: left 20px center;
 }
