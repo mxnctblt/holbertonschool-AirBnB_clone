@@ -62,11 +62,15 @@
 	padding-top: 20px;
 	margin-left: -34px;
 }
-
+.popover li {
+  list-style: none;
+  margin-bottom: 6px;
+}
 /* headers style */
 .filters h2 {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   font-size: 16px;
+  margin-left: -14px;
 }
 .filters h3 {
 	font-weight: 600;
