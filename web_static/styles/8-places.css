@@ -22,7 +22,7 @@
 .places li:last-child {
     margin-left: auto;
 }
-ul {
+.places ul {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -30,11 +30,11 @@ ul {
     padding-left: 0;
     margin: -10px auto 10px auto;
 }
-li {
+.places li {
     display: flex;
 
 }
-p {
+.places p {
     text-align: center;
 }
 
