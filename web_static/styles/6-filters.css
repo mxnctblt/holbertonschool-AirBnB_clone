@@ -1,11 +1,11 @@
 /* filters style */
 .filters {
 	background-color: white;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px;
+	display: inline-block;
 	height: 70px;
 	width: 100%;
-	border-radius: 4px;
-	border-color: #DDDDDD;
-	border: 1px solid;
 }
 
 /* button style */
@@ -21,63 +21,80 @@
 	margin-right: 30px;
 	margin-top: 11px;
 }
+  
+/* Search button hover opacity */
 .filters button:hover {
 	opacity: 90%;
 }
-
-/* locations & amenities style */
+  
+/* Locations and amenities style */
 .filters .locations,
 .filters .amenities {
 	display: inline-block;
 	height: 100%;
+	position: relative;
 	width: 25%;
-	margin-left: 30px;
 }
+
+/* Locations border */
 .filters .locations {
 	border-right: #DDDDDD 1px solid;
 }
 
-/* popover style */
-.filters .locations ul.popover,
-.filters .amenities ul.popover {
-  display: none;
-  background-color: #FAFAFA;
-  width: 12.5%;
-  position: absolute;
-  border-radius: 4px;
-  border-color: #DDDDDD;
-  border: 1px solid;
-  margin-top: -4px;
-  padding-bottom: 20px;
+/* Locations and amenities popover menu */
+.filters .popover {
+	background-color: #FAFAFA;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px;
+	display: none;
+	position: absolute;
+	width: 100%;
 }
-.filters .locations:hover ul.popover,
-.filters .amenities:hover ul.popover {
-  display: block;
+
+/* Locations and amenities popover hover */
+.filters .locations:hover .popover,
+.filters .amenities:hover .popover {
+	display: block;
 }
-.filters .locations ul.popover {
-	padding-top: 10px;
-	margin-left: -30px;
+
+/* Locations list style */
+.filters .locations ul {
+	padding: 6px 0 6px 0;
+	margin-top: 4px;
 }
-.filters .amenities ul.popover {
-	padding-top: 20px;
-	margin-left: -34px;
+/* Locations list element margin */
+.filters .locations li {
+	margin: 0 auto 6px 3em;
 }
+
+/* Amenities list element margin */
+.filters .amenities li {
+	margin: 12px auto 12px auto;
+}
+
+.filters .amenities ul {
+	margin-top: 4px;
+	margin-left: -4px;
+}
+
 .popover li {
-  list-style: none;
-  margin-bottom: 6px;
+	list-style: none;
 }
+
 /* headers style */
 .filters h2 {
-  margin-bottom: 6px;
-  font-size: 16px;
-  margin-left: -14px;
+	margin-bottom: 6px;
+	font-size: 16px;
+	margin-left: -14px;
 }
 .filters h3 {
 	font-weight: 600;
-	margin-bottom: 4px;
+	padding: 15.5px 0 0 30px;
+	margin: 0;
 }
 .filters h4 {
 	font-weight: 400;
 	font-size: 14px;
-	margin-top: 4px;
+	padding: 4.5px 0 12px 30px;
+	margin: 0;
 }
