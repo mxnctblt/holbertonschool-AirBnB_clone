@@ -1,0 +1,111 @@
+/* Places flexbox */
+.places {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+/* places article style */
+.places article {
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border: #FF5A5F solid 1px;
+    border-radius: 4px;
+}
+
+.places li:first-child {
+    margin-right: auto;
+    visibility: hidden;
+}
+.places li:last-child {
+    margin-left: auto;
+}
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0;
+    margin: -10px auto 10px auto;
+}
+li {
+    display: flex;
+
+}
+p {
+    text-align: center;
+}
+
+.places .price_by_night {
+    color: #FF5A5F;
+    border: #FF5A5F solid 4px;
+    border-radius: 50%;
+    min-width: 60px;
+    height: 60px;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.places .information {
+    align-items: center;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: row;
+    height: 80px;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.information .max_guest {
+    background-image: url("../images/icon_group.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    width: 100px;
+    padding-top: 50px;
+}
+
+.information .number_rooms {
+    background-image: url("../images/icon_bed.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    width: 100px;
+    padding-top: 50px;
+}
+
+.information .number_bathrooms {
+    background-image: url("../images/icon_bath.png");
+    background-repeat: no-repeat;
+    background-position: top;
+    width: 100px;
+    padding-top: 50px;
+}
+
+.places .user {
+    margin: 20px auto 10px auto;
+}
+
+/* Header 1 style */
+.places h1 {
+    text-align: left;
+    width: 100%;
+    font-size: 30px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    margin-top: 40px;
+}
+
+/* Header 2 style */
+.places h2 {
+    font-size: 30px;
+    margin-top: 0;
+    text-align: center;
+}
+
+footer {
+    position: relative;
+}
